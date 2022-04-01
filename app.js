@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
-const port = 3000
-
+const port = 4200
+app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })

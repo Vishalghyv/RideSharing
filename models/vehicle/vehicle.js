@@ -4,6 +4,7 @@ function Vehicle(ownerName, carName, carReg) {
     vehicle.ownerName = ownerName;
     vehicle.carName = carName;
     vehicle.carReg = carReg;
+    vehicle.booked = false;
 
     this.getOwnerName = function() {
         return vehicle.ownerName;

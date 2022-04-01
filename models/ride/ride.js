@@ -31,6 +31,10 @@ function Ride(driverName, carName, regNo, origin, destination, seats) {
     this.getSeats = function() {
         return ride.seats;
     }
+
+    this.changeSeats = function(newSeats) {
+        ride.seats = newSeats;
+    }
 }
 
 module.exports = {
