@@ -61,7 +61,7 @@ const printRideStatView = (req, res) => {
   });
 };
 
-// For View
+// For Login page
 const loginView = (req, res) => {
   res.render("login", {});
 };
@@ -69,7 +69,6 @@ const loginView = (req, res) => {
 const loginUser = (req, res) => {
   const { name, password } = req.body;
 
-  //Required
   if (!name || !password) {
     console.log("Please fill in all the fields");
     res.render("login", {
@@ -77,7 +76,6 @@ const loginUser = (req, res) => {
       password,
     });
   } else {
-    console.log(allUsers);
     if (typeof allUsers[name] === "undefined") {
       console.log("Username doesn't exists, please use correct username");
       res.render("login", {
@@ -86,11 +84,12 @@ const loginUser = (req, res) => {
       });
     }
     
+    console.log(allUsers[name].getPassword());
     if (allUsers[name].getPassword() !== password) {
       console.log("Password doesn't match");
       return res.render("login", {
-        name: name,
-        password: password,
+        name,
+        password,
       });
     }
 

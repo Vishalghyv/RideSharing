@@ -1,4 +1,3 @@
-// var User = require("../models/User/User.js");
 const bcrypt = require("bcryptjs");
 const M = require("../service/main.js");
 var Main = new M();

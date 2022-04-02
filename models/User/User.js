@@ -41,6 +41,7 @@ function User(name, gender, age, password) {
     }
 
 
+    // Creates a new ride and marks the vehicle booked
     this.offerRide = function(carName, regNo, origin, destination, seats) {
         if (typeof user.vehicle[regNo] === "undefined" || user.vehicle[regNo].booked || user.vehicle[regNo].getCarName() !== carName) {
             return false;
@@ -59,6 +60,9 @@ function User(name, gender, age, password) {
         user.vehicle[regNo] = new Vehicle(user.name, carName, regNo);
     }
 
+    // Gets offered rides and filters rides with given destination and origin
+    // Based on the args returns ride with maximum seat or ride with given carName
+    // If no ride found returns false
     this.selectRides = function(origin, destination, seats, args) {
         var rides = [];
         for (const [a, ride] of Object.entries(allRides)) {

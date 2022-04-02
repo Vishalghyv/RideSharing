@@ -2,17 +2,8 @@ var User = require("../models/User/User.js");
 
 
 function Main() {
-    this.addUser = function (name, gender, age) {
-        if (typeof allUsers[name] !== "undefined") {
-            console.log("Username exists, please use different username");
-            return false;
-        }
-        const newUser = new User(name, gender, age, "123");
-        allUsers[name] = newUser;
-        return true;
-    }
-
-    this.addUserMain = function(name, gender, age, password) {
+    // Adds user in memory database
+    this.addUser = function (name, gender, age, password ="123") {
         if (typeof allUsers[name] !== "undefined") {
             console.log("Username exists, please use different username");
             return false;
@@ -22,6 +13,7 @@ function Main() {
         return true;
     }
 
+    // Adds vehicle with Car name and registration no to user
     this.addVehicle = function(name, carName, regNo) {
         if (typeof allUsers[name] === "undefined") {
             console.log("Username doesn't exists, please login");
@@ -40,12 +32,14 @@ function Main() {
     }
 
 
+    // Logs all users ride stats
     this.logRideStat = function() {
         for (const [_, user] of Object.entries(allUsers)) {
             console.log(user.getName() + ": " + user.getTaken() + " Taken,  " + user.getOffered() + " Offered");
         }
     }
 
+    // Adds ride for a user
     this.offerRide = function(name, origin, seats, carName, regNo, destination) {
         if (typeof allUsers[name] === "undefined") {
             console.log("Username doesn't exists, please use correct username");
@@ -66,7 +60,11 @@ function Main() {
         return true;
     }
 
-    this.selectRide = function(name, origin, destination, seats, args) {
+    // Select ride for a user with origin, destination and seats
+    // Args is an optional parameter:
+    //     1. If args is not passed, then ride with max seats is selected
+    //     2. If args is passed, then ride with with given car name is selected
+    this.selectRide = function(name, origin, destination, seats, args='') {
         if (typeof allUsers[name] === "undefined") {
             console.log("Username doesn't exists, please use correct username");
             return false;
@@ -83,6 +81,7 @@ function Main() {
         return true;
     }
 
+    // Ends a ride for a user
     this.endRideMain = function(name, regNo) {
         if (typeof allUsers[name] === "undefined") {
             console.log("Username doesn't exists, please use correct username");
@@ -96,26 +95,13 @@ function Main() {
 
         currUser.getVehicle()[regNo].booked = false;
         delete allRides[regNo];
-        console.log("Ride ended successfully");
+        console.log("Ride ended successfully with registration number " + regNo);
         return true;
     }
 
-
+    // Wrapper function for endRideMain
     this.endRide = function(name, origin, seats, carName, regNo, destination) {
-        if (typeof allUsers[name] === "undefined") {
-            console.log("Username doesn't exists, please use correct username");
-            return false;
-        } 
-        var currUser = allUsers[name];
-        if (typeof currUser.getVehicle()[regNo] === "undefined" || typeof allRides[regNo] === "undefined") {
-            console.log("Vehicle with registration number " + regNo + " not available");
-            return false;
-        }
-
-        currUser.getVehicle()[regNo].booked = false;
-        delete allRides[regNo];
-        console.log("Ride ended successfully");
-        return true;
+        return this.endRideMain(name, regNo);
     }
 
 
