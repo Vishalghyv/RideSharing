@@ -1,15 +1,16 @@
-const {Ride} = require('../ride/ride');
+const {Ride} = require('../Ride/Ride');
+const {Vehicle} = require('../Vehicle/Vehicle');
 
-function User(name, gender, age) {
+function User(name, gender, age, password) {
     var user = {};
     
     user.name = name;
     user.gender = gender;
     user.age = age;
-    user.ride = [];
     user.vehicle = {};
     user.offered = 0;
     user.taken = 0;
+    user.password = password;
 
     this.getName = function() {
         return user.name;
@@ -23,38 +24,58 @@ function User(name, gender, age) {
         return user.age;
     }
 
+    this.getVehicle = function() {
+        return user.vehicle;
+    }
+
+    this.getPassword = function() {
+        return user.password;
+    }
+
+    this.getTaken = function() {
+        return user.taken;
+    }
+
+    this.getOffered = function() {
+        return user.offered;
+    }
+
+
     this.offerRide = function(carName, regNo, origin, destination, seats) {
-        if (user.vehicle[regNo].booked) {
+        if (typeof user.vehicle[regNo] === "undefined" || user.vehicle[regNo].booked || user.vehicle[regNo].getCarName() !== carName) {
             return false;
         }
-        user.ride.push(new Ride(user.name, carName, regNo, origin, destination, seats));
-        allRides.addRide(regNo, user.ride[user.ride.length - 1]);
+
+        allRides[regNo] = new Ride(user.name, carName, regNo, origin, destination, seats);
         user.vehicle[regNo].booked = true;
         user.offered++;
         return true;
     }
 
     this.addVehicle = function(carName, regNo) {
+        if (typeof user.vehicle[regNo] !== "undefined") {
+            return;
+        }
         user.vehicle[regNo] = new Vehicle(user.name, carName, regNo);
     }
 
     this.selectRides = function(origin, destination, seats, args) {
         var rides = [];
-        for(const ride of allRides) {
+        for (const [a, ride] of Object.entries(allRides)) {
             if (ride.getOrigin() == origin && ride.getDestination() == destination && ride.getSeats() >= seats) {
                 rides.push(ride);
             }
         }
 
         if (rides.length == 0) {
-            return rides;
+            return false;
         }
 
         rides.sort(function(a, b) {
             return b.getSeats() - a.getSeats();
         });
 
-        if (args == "Most Vacant") { 
+        if (args == "") { 
             user.taken++;
             allRides[rides[0].getRegNo()].changeSeats(rides[0].getSeats() - seats);
             return rides[0];
@@ -68,11 +89,9 @@ function User(name, gender, age) {
             }
         }
 
-        return [];        
+        return false;        
     }
 
 }
 
-module.exports = {
-    User
-};
+module.exports = User;

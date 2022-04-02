@@ -14,7 +14,7 @@ function Vehicle(ownerName, carName, carReg) {
         return vehicle.carName;
     }
 
-    this.getCarReg = function() {
+    this.getRegNo = function() {
         return vehicle.carReg;
     }
 }

@@ -1,28 +1,31 @@
-const User = require("../models/user/user");
+// var User = require("../models/User/User.js");
 const bcrypt = require("bcryptjs");
-
+const M = require("../service/main.js");
+var Main = new M();
 const rideOfferView = (req, res) => {
     res.render("rideOfferView", {
     } );
 }
 
 const rideOfferAdd = (req, res) => {
-    const { name, carName, regNo, origin, destination, seats } = req.body;
+    const { carName, regNo, origin, destination, seats } = req.body;
+    const name = req.app.get("user").getName();
     if (!name || !carName || !regNo || !origin || !destination || !seats) {
       console.log("Fill empty fields");
       return;
     }
-    //Confirm Passwords
-    if (!allUsers[name]) {
-        console.log("Username doesn't exists, please use correct username");
-    } else {
-        var currUser = allUsers[name];
-        if (!currUser.vehicle[regNo] && currUser.vehicle[regNo].booked) {
-          console.log("Vehicle with registration number " + regNo + " not available");
-          return;
-        }
-        currUser.offerRide(carName, regNo, origin, destination, seats);
+
+    if (!Main.offerRide(name, origin, seats, carName, regNo, destination)) {
+        return res.render("rideOfferView", {
+            carName,
+            regNo,
+            origin,
+            destination,
+            seats
+        });
     }
+
+    res.redirect("/dashboard");
   };
 
 const rideSelectView = (req, res) => {
@@ -31,31 +34,23 @@ const rideSelectView = (req, res) => {
 }
 
 const rideSelectAdd = (req, res) => {
-    const { name, origin, destination, seats, args } = req.body;
+    const { origin, destination, seats, args } = req.body;
+    const name = req.app.get("user").getName();
     if (!name || !origin || !destination || !seats) {
       console.log("Fill empty fields");
       return;
     }
 
-    if (!allUsers[name]) {
-        console.log("Username doesn't exists, please use correct username");
-    } else {
-        var currUser = allUsers[name];
-        if (args == "") {
-            args = "Most Vacant";
-        }
-        var ride = currUser.selectRide(origin, destination, seats, args);
-
-        if (ride == []) {
-            console.log("No ride available");
-            return;
-        } else {
-            console.log("Ride available is: " + ride.getRegNo() + " " + ride.getCarName() + " " + ride.getOrigin() + " " + ride.getDestination());
-            res.render("rideelectView", {
-                ride: ride
-            });
-        }
+    if (!Main.selectRide(name, origin, destination, seats, args)) {
+        return res.render("rideSelectView", {
+            origin,
+            destination,
+            seats,
+            args
+        });
     }
+    
+    res.redirect("/dashboard");
   };
 
 const endRideView = (req, res) => {
@@ -64,16 +59,19 @@ const endRideView = (req, res) => {
 
 const endRideAdd = (req, res) => {
     const { regNo } = req.body;
+    const name = req.app.get("user").getName();
     if (!regNo) {
         console.log("Fill empty fields");
         return;
     }
 
-    if (allRides.endRide(regNo)) {
-        console.log("Ride with registration number " + regNo + " ended successfully");
-    } else {
-        console.log("Ride with registration number " + regNo + " not found");
+    if (!Main.endRideMain(name, regNo)) {
+        return res.render("endRideView", {
+            regNo
+        });
     }
+
+    res.redirect("/dashboard");
 }
   
 

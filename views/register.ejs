@@ -14,35 +14,39 @@
                                         <div class="cols-sm-10">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Name" />
+                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Name" value="<%= typeof name != 'undefined' ? name : '' %>"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="age" class="cols-sm-2 control-label">Age</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                                <input type="number" class="form-control" name="age" id="age" placeholder="Enter your Age" value="<%= typeof age != 'undefined' ? age : '' %>"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                                        <label for="gender" class="cols-sm-2 control-label">Gender</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" name="email" id="email" placeholder="Enter your Email" />
+                                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                                <select id="gender" name="gender">
+                                                    <option value="M">Male</option>
+                                                    <option value="F">Female</option>
+                                                    <option value="O">Others</option>
+                                                  </select>
                                             </div>
                                         </div>
-                                    </div>
-                                    
+                                    </div>                                      
                                     <div class="form-group">
                                         <label for="password" class="cols-sm-2 control-label">Password</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                                <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password" />
+                                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" value="<%= typeof password != 'undefined' ? password : '' %>"/>
                                             </div>
                                         </div>
                                     </div>

@@ -1,0 +1,14 @@
+<%- include('layout.ejs'); %>
+<div class="container">
+    <div class="row justify-content-center">
+
+        <% for (const [_, user] of Object.entries(users)) { %>
+            <p><%= user.getName()%> taken <%= user.getTaken()%>, offered <%= user.getOffered()%></p>
+         <% } %>
+
+    </div>
+</div>
+
+</body>
+
+</html>

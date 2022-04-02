@@ -1,0 +1,42 @@
+<%- include('layout.ejs'); %>
+<div class="container">
+<div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <h2>NODE.JS MVC</h2>
+                        <div class="card">
+                            <div class="card-header">Register</div>
+                            <div class="card-body">
+
+                                <form class="form-horizontal" method="post" action="/vehicle">
+
+                                    <div class="form-group">
+                                        <label for="carName" class="cols-sm-2 control-label">Your carName</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                <input type="text" class="form-control" name="carName" id="carName" placeholder="Enter carName" value="<%= typeof carName != 'undefined' ? carName : '' %>"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="regNo" class="cols-sm-2 control-label">Your regNo</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                <input type="text" class="form-control" name="regNo" id="regNo" placeholder="Enter regNo" value="<%= typeof regNo != 'undefined' ? regNo : '' %>"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Add Vehicle</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+</div>
+
+</body>
+</html>
